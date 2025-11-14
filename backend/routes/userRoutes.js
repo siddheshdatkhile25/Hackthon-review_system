@@ -58,17 +58,17 @@ router.post('/login', (req, res) => {
             if (userValid) {
                 // body part inside the jwt that needs to be encrypted
                 const payload = {
-                    uid: dbUser.uid
+                    uid: dbUser.id
                 }
                 // create the jwt token
                 const token = jwt.sign(payload, config.secret)
                 const user = {
+                    uid: dbUser.id,
                     token: token,
                     firstName: dbUser.first_name,
                     lastName: dbUser.last_name,
                     email: dbUser.email,
-                    userid:dbUser.id
-                    
+
                 }
                 res.send(result.createResult(error, user))
             }

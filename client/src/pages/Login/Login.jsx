@@ -33,14 +33,14 @@ function Login() {
 
                 setUser({
                     uid: response['data']['uid'],
-                    firstName : response['data']['first_name'],
-                    lastName : response['data']['last_name'],
+                    firstName : response['data']['firstName'],
+                    lastName : response['data']['lastName'],
                     email: response['data']['email']
                 })
 
                 localStorage.setItem('uid', response['data']['uid']);
-                localStorage.setItem('firstName', response['data']['first_name']);
-                localStorage.setItem('lastName', response['data']['last_name']);
+                localStorage.setItem('firstName', response['data']['firstName']);
+                localStorage.setItem('lastName', response['data']['lastName']);
                 localStorage.setItem('email', response['data']['email']);
 
                 navigate('/home')

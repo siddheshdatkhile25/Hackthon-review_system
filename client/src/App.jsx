@@ -12,6 +12,7 @@ import Home from './pages/Home/Home'
 import ChangePassword from './pages/Home/ChangePassword'
 import DisplayMovies from './pages/displayMovies/DisplayMovies'
 import AddReview from './pages/AddReview/AddReview'
+import DisplayAllReviews from './pages/DisplayAllReviews/DisplayAllReviews'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -49,6 +50,11 @@ function App() {
             <Route
             path='add-review/:id'
             element={<AddReview />} />
+
+            <Route
+            path='display-review'
+            element={<DisplayAllReviews/>}
+            />
           </Route>
 
 

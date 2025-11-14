@@ -46,9 +46,19 @@ const { setUser } = useAuth()
               <Link
                 className='nav-link'
                 aria-current='page'
-                to='/home'
+                to='/home/display-review'
               >
                 Reviewed Movies
+              </Link>
+            </li>
+
+            <li className='nav-item'>
+              <Link
+                className='nav-link'
+                aria-current='page'
+                to='/home/display-review'
+              >
+                My Reviews
               </Link>
             </li>
 

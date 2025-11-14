@@ -11,13 +11,13 @@ function AuthProvider({ children }) {
   useEffect(() => {
     const token = localStorage.getItem('token')
     if (token) {
-      // decode token to get user info
-      const payload = JSON.parse(atob(token.split('.')[1]))
+      
       setUser({
         uid: localStorage.getItem('uid'),
         firstName: localStorage.getItem('firstName'),
         lastName: localStorage.getItem('lastName'),
-        email: localStorage.getItem('email')
+        email: localStorage.getItem('email'),
+        token: localStorage.getItem('token')
       })
     }
   }, [])
@@ -35,3 +35,6 @@ export default AuthProvider
 export function useAuth() {
   return useContext(AuthContext)
 }
+
+
+
