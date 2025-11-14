@@ -1,5 +1,6 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 //userdefined modules
 const pool = require('../utils/db');
@@ -75,45 +76,11 @@ router.post('/login', (req, res) => {
     })
 })
 
-// POST /api/v1/users/login (Sign In)
-router.post('/login1', async (req, res) => {
-    const { email, password } = req.body;
+router.delete('/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = `DELETE FROM users WHERE id = ?`
+    pool.query(sql, [id], (error, data) => res.send(result.createResult(error, data)))
+})
 
-    if (!email || !password) {
-        return res.status(400).json({ message: 'Missing email or password' });
-    }
-
-    try {
-        // Retrieve user from the database
-        const query = 'SELECT id, password FROM users WHERE email = ?';
-        const [rows] = await db.execute(query, [email]);
-
-        if (rows.length === 0) {
-            return res.status(401).json({ message: 'Invalid credentials' });
-        }
-
-        const user = rows[0];
-        // Compare the submitted password with the hashed password in the database
-        const isMatch = await bcrypt.compare(password, user.password);
-
-        if (!isMatch) {
-            return res.status(401).json({ message: 'Invalid credentials' });
-        }
-        
-        // In a real application, you would generate a JWT token here and send it back
-        res.status(200).json({ 
-            message: 'Login successful', 
-            userId: user.id,
-            token: 'fake-jwt-token-12345'
-        });
-
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Server error during login' });
-    }
-});
-
-
-// Add routes for Edit Profile, Change Password, Logout, etc. similarly
 
 module.exports = router;
