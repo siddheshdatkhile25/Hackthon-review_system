@@ -1,5 +1,5 @@
 
-CREATE DATABASE movies_review
+CREATE DATABASE movies_review;
 USE movies_review;
 
 
