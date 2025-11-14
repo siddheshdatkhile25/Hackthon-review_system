@@ -66,7 +66,7 @@ function Register() {
 
 
                 <div>
-                    Already have an account? {/*<Link to='/'>Login here</Link>*/}
+                    Already have an account? <Link to='/login'>Login here</Link>
                 </div>
 
                 <div className='mb-3 d-grid gap-2 col-6 mx-auto'>
