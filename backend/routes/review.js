@@ -73,19 +73,17 @@ router.put('/edit/:id', (req, res) => {
 
 // Share review
 router.post('/share', (req, res) => {
-    console.log()
     const { review_id, user_id, share_with } = req.body;
 
     if (!review_id || !user_id || !share_with) {
         return res.send(result.createResult('Missing fields'));
     }
 
-    // Rule: cannot share a review with yourself
     if (user_id === share_with) {
         return res.send(result.createResult('You cannot share a review with yourself'));
     }
 
-    // Check existing share
+
     const sqlCheck = `SELECT * FROM shares WHERE review_id = ? AND user_id = ?`;
 
     pool.query(sqlCheck, [review_id, share_with], (err, data) => {
@@ -93,7 +91,6 @@ router.post('/share', (req, res) => {
             return res.send(result.createResult('Already shared with this user'));
         }
 
-        // Insert share
         const sqlInsert = `INSERT INTO shares (review_id, user_id) VALUES (?, ?)`;
 
         pool.query(sqlInsert, [review_id, share_with], (err2, data2) => {
