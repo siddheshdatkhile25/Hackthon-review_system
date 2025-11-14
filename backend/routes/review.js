@@ -49,7 +49,6 @@ router.put('/edit/:id', (req, res) => {
     const userId = req.body.user_id;  
     const { review, rating } = req.body;
 
-    // Check fields
     if (!review || !rating) {
         return res.status(400).send(result.createResult('Missing required fields'));
     }
@@ -67,6 +66,37 @@ router.put('/edit/:id', (req, res) => {
 
         pool.query(sqlUpdate, [review, rating, reviewId], (err2, data) => {
             res.send(result.createResult(err2, 'Review updated successfully'));
+        });
+    });
+});
+
+
+// Share review
+router.post('/share', (req, res) => {
+    const { review_id, user_id, share_with } = req.body;
+
+    if (!review_id || !user_id || !share_with) {
+        return res.status(400).send(result.createResult('Missing fields'));
+    }
+
+    // Rule: cannot share a review with yourself
+    if (user_id === share_with) {
+        return res.status(400).send(result.createResult('You cannot share a review with yourself'));
+    }
+
+    // Check existing share
+    const sqlCheck = `SELECT * FROM shares WHERE review_id = ? AND user_id = ?`;
+
+    pool.query(sqlCheck, [review_id, share_with], (err, data) => {
+        if (data.length > 0) {
+            return res.status(400).send(result.createResult('Already shared with this user'));
+        }
+
+        // Insert share
+        const sqlInsert = `INSERT INTO shares (review_id, user_id) VALUES (?, ?)`;
+
+        pool.query(sqlInsert, [review_id, share_with], (err2, data2) => {
+            res.send(result.createResult(err2, 'Review shared successfully'));
         });
     });
 });
