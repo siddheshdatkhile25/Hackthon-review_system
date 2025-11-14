@@ -67,6 +67,7 @@ router.post('/login', (req, res) => {
                     firstName: dbUser.first_name,
                     lastName: dbUser.last_name,
                     email: dbUser.email,
+                    userid:dbUser.id
                     
                 }
                 res.send(result.createResult(error, user))
