@@ -14,6 +14,8 @@ const { setUser } = useAuth()
     localStorage.removeItem('token')
     localStorage.removeItem('firstName')
     localStorage.removeItem('lastName')
+    localStorage.removeItem('email')
+    localStorage.removeItem('uid')
 
     // set the user to null
     setUser(null)
@@ -44,7 +46,7 @@ const { setUser } = useAuth()
               <Link
                 className='nav-link'
                 aria-current='page'
-                to='/home/Reviewed movies'
+                to='/home'
               >
                 Reviewed Movies
               </Link>
