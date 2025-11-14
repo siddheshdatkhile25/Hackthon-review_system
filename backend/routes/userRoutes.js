@@ -22,6 +22,7 @@ router.get('/', (req, res) => {
     })
 })
 
+//registration
 router.post('/register', async (req, res) => {
     const { firstName, lastName, email, password, mobile, birth } = req.body;
     const sql = `INSERT INTO users (first_name, last_name, email, password, mobile, birth)
@@ -49,10 +50,11 @@ router.post('/register', async (req, res) => {
 //user login
 router.post('/login', (req, res) => {
     const { email, password } = req.body
-    const sql = `SELECT id, password FROM users WHERE email = ?`
+    const sql = `SELECT * FROM users WHERE email = ?`
     pool.query(sql, [email], async (error, data) => {
         if (data != '') {
             const dbUser = data[0]
+            console.log(dbUser)
             const userValid = await bcrypt.compare(password, dbUser.password)
             if (userValid) {
                 // body part inside the jwt that needs to be encrypted
@@ -63,8 +65,10 @@ router.post('/login', (req, res) => {
                 const token = jwt.sign(payload, config.secret)
                 const user = {
                     token: token,
-                    name: dbUser.name,
-                    email: dbUser.email
+                    firstName: dbUser.first_name,
+                    lastName: dbUser.last_name,
+                    email: dbUser.email,
+                    
                 }
                 res.send(result.createResult(error, user))
             }
