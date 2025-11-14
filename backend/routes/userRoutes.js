@@ -30,10 +30,10 @@ router.post('/register', async (req, res) => {
 
     //basic validations
     if (!firstName || !lastName || !email || !password) {
-        return res.status(400).json({ message: 'Missing required fields' });
+        return res.json({ message: 'Missing required fields' });
     }
     if (!validateEmail(email)) {
-        return res.status(400).json({ message: 'Invalid email format' });
+        return res.json({ message: 'Invalid email format' });
     }
 
     try {
