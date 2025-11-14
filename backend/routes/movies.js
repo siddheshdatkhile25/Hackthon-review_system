@@ -1,32 +1,3 @@
-npm install express mysql2 bcrypt
-
-//registration api
-
-http://localhost:4000/users/register
-
-{
-  "firstName": "sid",
-  "lastName": "jadhav",
-  "email": "sid@gmail.com",
-  "password": "sid",
-  "mobile": "1234567890",
-  "birth": "2003-05-15"
-}
-
-npm install jsonwebtoken
-
-//login api
-http://localhost:4000/users/login
-
-{
-    "email": "sid@gmail.com",
-    "password": "sid"
-}
-
-//delete api
-http://localhost:4000/users/1
-
-
 // Add 10 movies (fixed) into database.
 
 // INSERT INTO movies (title, release_date)

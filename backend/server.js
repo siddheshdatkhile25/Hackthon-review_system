@@ -1,6 +1,8 @@
 const express = require("express")
-const userRoutes = require("./routes/userRoutes")
 const cors = require('cors')
+
+const userRoutes = require("./routes/userRoutes")
+const reviewRoutes = require("./routes/review")
 
 const app = express()
 
@@ -12,6 +14,7 @@ app.use(express.json());
 
 // Routes
 app.use("/users", userRoutes);
+app.use("/reviews", reviewRoutes);
 
 app.get('/', (req, res) => {
     res.send('Movie Reviews API Server Running')
