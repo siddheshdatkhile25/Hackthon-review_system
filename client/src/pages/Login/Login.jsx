@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import './Login.css'
 
-import{useAuth} from '../providers/AuthProvider'
-import{login} from '../../services/users'
+import { useAuth } from '../providers/AuthProvider'
+import{ login } from '../../services/users'
 
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import {toast} from 'react-toastify'
 
 
@@ -13,7 +13,8 @@ function Login() {
     const [email,setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    const { setUser } = useAuth
+    const { setUser } = useAuth()
+    const navigate = useNavigate()
 
     const onLogin = async()=>{
         if(email.length == 0){
@@ -23,6 +24,8 @@ function Login() {
         }
         else{
             const response = await login(email,password);
+            console.log(response.data);
+            
             if(response['status'] == 'success'){
                 toast.success('login Successfull');
 
@@ -30,10 +33,11 @@ function Login() {
 
                 setUser({
                     firstName : response['data']['first_name'],
-                    lastName : response['data']['last_name']
+                    lastName : response['data']['last_name'],
+                    email: response['data']['email']
                 })
 
-
+                navigate('/home')
 
             }else{
                 toast.error(response.error);

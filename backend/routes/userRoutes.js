@@ -85,5 +85,28 @@ router.delete('/:id', (req, res) => {
     pool.query(sql, [id], (error, data) => res.send(result.createResult(error, data)))
 })
 
+//change password
+router.put('/change-password', async (req, res) => {
+    const { email, oldPassword, newPassword } = req.body;
+    const sqlSelect = `SELECT * FROM users WHERE email = ?`
+    pool.query(sqlSelect, [email], async (error, data) => {
+        if (error) {
+            return res.send(result.createResult(error))
+        }
+        if (data.length === 0) {
+            return res.send(result.createResult('User not found'))
+        }
+        const dbUser = data[0]
+        const isOldPasswordValid = await bcrypt.compare(oldPassword, dbUser.password)
+        if (!isOldPasswordValid) {
+            return res.send(result.createResult('Invalid old password'))
+        }
+        const hashedNewPassword = await bcrypt.hash(newPassword, config.saltRounds)
+        const sqlUpdate = `UPDATE users SET password = ? WHERE email = ?`
+        pool.query(sqlUpdate, [hashedNewPassword, email], (error, data) => {
+            res.send(result.createResult(error, data))
+        })
+    })
+})
 
 module.exports = router;

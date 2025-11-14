@@ -1,18 +1,22 @@
-import React, { Children } from 'react'
-import { createContext,useContext,useState } from 'react'
+import { createContext, useContext, useState } from 'react'
 
-const AuthContext = createContext();
+// create an empty context
+const AuthContext = createContext()
 
-function AuthProvider() {
+function AuthProvider({ children }) {
+  // create state to store logged user information
+  const [user, setUser] = useState(null)
+
   return (
-    <AuthContext.Provider value={{user , setUser}}>
-        {Children}
+    <AuthContext.Provider value={{ user, setUser }}>
+      {children}
     </AuthContext.Provider>
   )
 }
 
 export default AuthProvider
 
-export function useAuth(){
-    return useContext(AuthContext)
+// expose the context using custom hook
+export function useAuth() {
+  return useContext(AuthContext)
 }
