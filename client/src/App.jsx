@@ -10,6 +10,7 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 import AuthProvider from './pages/providers/AuthProvider'
 import Home from './pages/Home/Home'
 import ChangePassword from './pages/Home/ChangePassword'
+import DisplayMovies from './pages/displayMovies/DisplayMovies'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -36,9 +37,17 @@ function App() {
           <Route
             path='/home'
             element={<Home/>}
-          >
-            <Route path='change-password' element={<ChangePassword />} />
+          > 
+            <Route 
+            path='/home'
+            element={<DisplayMovies/>}
+            />
+            <Route 
+            path='change-password' 
+            element={<ChangePassword />} />
           </Route>
+
+
 
 
 

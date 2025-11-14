@@ -30,7 +30,7 @@ const { setUser } = useAuth()
       <div className='container-fluid'>
         <Link
           className='navbar-brand'
-          to='/home/properties'
+          to='/home'
         >
           MyClimaxReviewer
         </Link>
@@ -44,7 +44,7 @@ const { setUser } = useAuth()
               <Link
                 className='nav-link'
                 aria-current='page'
-                to='/home/properties'
+                to='/home/Reviewed movies'
               >
                 Reviewed Movies
               </Link>
