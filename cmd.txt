@@ -1,2 +1,14 @@
 npm install express mysql2 bcrypt
 
+//registration api
+
+http://localhost:4000/users/register
+
+{
+  "firstName": "sid",
+  "lastName": "jadhav",
+  "email": "sid@gmail.com",
+  "password": "sid",
+  "mobile": "1234567890",
+  "birth": "2003-05-15"
+}
