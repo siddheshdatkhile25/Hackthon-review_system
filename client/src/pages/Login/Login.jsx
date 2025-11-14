@@ -32,10 +32,16 @@ function Login() {
                 localStorage.setItem('token', response['data']['token']);
 
                 setUser({
+                    uid: response['data']['uid'],
                     firstName : response['data']['first_name'],
                     lastName : response['data']['last_name'],
                     email: response['data']['email']
                 })
+
+                localStorage.setItem('uid', response['data']['uid']);
+                localStorage.setItem('firstName', response['data']['first_name']);
+                localStorage.setItem('lastName', response['data']['last_name']);
+                localStorage.setItem('email', response['data']['email']);
 
                 navigate('/home')
 
