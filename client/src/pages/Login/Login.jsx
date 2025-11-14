@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import './Login.css'
 
+import{useAuth} from '../providers/AuthProvider'
+import{login} from '../../services/users'
+
 import { Link } from 'react-router-dom'
 import {toast} from 'react-toastify'
 
@@ -10,6 +13,8 @@ function Login() {
     const [email,setEmail] = useState('')
     const [password, setPassword] = useState('')
 
+    const { setUser } = useAuth
+
     const onLogin = async()=>{
         if(email.length == 0){
             toast.warning('please enter email');
@@ -18,6 +23,21 @@ function Login() {
         }
         else{
             const response = await login(email,password);
+            if(response['status'] == 'success'){
+                toast.success('login Successfull');
+
+                localStorage.setItem('token', response['data']['token']);
+
+                setUser({
+                    firstName : response['data']['first_name'],
+                    lastName : response['data']['last_name']
+                })
+
+
+
+            }else{
+                toast.error(response.error);
+            }
         }
     }
 
