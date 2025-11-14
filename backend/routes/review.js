@@ -100,4 +100,38 @@ router.post('/share', (req, res) => {
 });
 
 
+router.delete('/delete/:id', (req, res) => {
+    const reviewId = req.params.id;
+    const { user_id } = req.body;
+
+    if (!user_id) {
+        return res.send(result.createResult("Missing user_id"));
+    }
+
+   
+    const sqlDeleteReview = `DELETE FROM reviews WHERE id = ? AND user_id = ?`;
+
+    pool.query(sqlDeleteReview, [reviewId, user_id], (err, result1) => {
+        if (err) {
+            return res.send(result.createResult(err));
+        }
+
+       
+        if (result1.affectedRows === 0) {
+            return res.send(result.createResult("You can delete only your own review"));
+        }
+
+     
+        const sqlDeleteShares = `DELETE FROM shares WHERE review_id = ?`;
+
+        pool.query(sqlDeleteShares, [reviewId], (err2, result2) => {
+            return res.send(result.createResult(err2, {
+                message: "Review deleted successfully, shares removed",
+                deletedReview: result1.affectedRows,
+                deletedShares: result2?.affectedRows || 0
+            }));
+        });
+    });
+});
+
 module.exports = router;
