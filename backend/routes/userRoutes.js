@@ -45,9 +45,38 @@ router.post('/register', async (req, res) => {
     }
 })
 
+//user login
+router.post('/login', (req, res) => {
+    const { email, password } = req.body
+    const sql = `SELECT id, password FROM users WHERE email = ?`
+    pool.query(sql, [email], async (error, data) => {
+        if (data != '') {
+            const dbUser = data[0]
+            const userValid = await bcrypt.compare(password, dbUser.password)
+            if (userValid) {
+                // body part inside the jwt that needs to be encrypted
+                const payload = {
+                    uid: dbUser.uid
+                }
+                // create the jwt token
+                const token = jwt.sign(payload, config.secret)
+                const user = {
+                    token: token,
+                    name: dbUser.name,
+                    email: dbUser.email
+                }
+                res.send(result.createResult(error, user))
+            }
+            else
+                res.send(result.createResult('Invalid Password'))
+        }
+        else
+            res.send(result.createResult('Invalid Email'))
+    })
+})
 
 // POST /api/v1/users/login (Sign In)
-router.post('/login', async (req, res) => {
+router.post('/login1', async (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
