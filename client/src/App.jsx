@@ -11,6 +11,7 @@ import AuthProvider from './pages/providers/AuthProvider'
 import Home from './pages/Home/Home'
 import ChangePassword from './pages/Home/ChangePassword'
 import DisplayMovies from './pages/displayMovies/DisplayMovies'
+import AddReview from './pages/AddReview/AddReview'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -37,14 +38,17 @@ function App() {
           <Route
             path='/home'
             element={<Home/>}
-          > 
-            <Route 
+          >
+            <Route
             path='/home'
             element={<DisplayMovies/>}
             />
-            <Route 
-            path='change-password' 
+            <Route
+            path='change-password'
             element={<ChangePassword />} />
+            <Route
+            path='add-review/:id'
+            element={<AddReview />} />
           </Route>
 
 

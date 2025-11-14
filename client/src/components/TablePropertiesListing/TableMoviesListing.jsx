@@ -1,6 +1,15 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
+
 
 function TableMoviesListing({movies}) {
+
+  const navigate = useNavigate();
+
+  const addReview = (id) => {
+    navigate(`/home/add-review/${id}`)
+
+  }
   return (
     <table className='table'>
         <thead>
