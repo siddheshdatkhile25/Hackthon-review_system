@@ -54,7 +54,6 @@ router.post('/login', (req, res) => {
     pool.query(sql, [email], async (error, data) => {
         if (data != '') {
             const dbUser = data[0]
-            console.log(dbUser)
             const userValid = await bcrypt.compare(password, dbUser.password)
             if (userValid) {
                 // body part inside the jwt that needs to be encrypted
